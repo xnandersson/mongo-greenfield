@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import pprint
 
 
 client = MongoClient('mongodb://localhost:27017')
@@ -46,7 +47,12 @@ def insert_many():
         for id in result.inserted_ids:
             print("{} inserted".format(id))
 
+def list_sudoroles():
+    result = sudoroles.find()
+    for sudorole in result:
+        pprint.pprint(sudorole)
 if __name__ == '__main__':
     insert_one()
     insert_many()
+    list_sudoroles()
 
