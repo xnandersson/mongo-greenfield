@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import pprint
+import re
 
 
 client = MongoClient('mongodb://localhost:27017')
@@ -48,11 +49,14 @@ def insert_many():
             print("{} inserted".format(id))
 
 def list_sudoroles():
-    result = sudoroles.find()
+#result = sudoroles.find()
+#   result = sudoroles.find({'sudo_user': { '$regex': '^nandersson'}}).sort([('sudo_user', 1), ('sudo_host', -1)])
+    regx = re.compile("^nandersson", re.IGNORECASE)
+    result = sudoroles.find({'sudo_user': regx}).sort([('sudo_user', 1), ('sudo_host', -1)])
     for sudorole in result:
         pprint.pprint(sudorole)
 if __name__ == '__main__':
-    insert_one()
-    insert_many()
+#    insert_one()
+#    insert_many()
     list_sudoroles()
 
